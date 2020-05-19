@@ -1,0 +1,40 @@
+excel:
+  name: cases.xlsx
+  result_col: 7
+  result_pass: 通过
+  result_nopass: 不通过
+  actual_col: 8
+logs:
+  log_name: 'xixi'
+  level1: "DEBUG"
+  sh_level: "DEBUG"
+  formated: "%(asctime)s-[%(filename)s--->line:%(lineno)d]-%(name)s:%(levelname)s:%(message)s"
+  filename: 'test.log'
+  level2: "DEBUG"
+reports:
+  report_name: report
+  title: "测试报告"
+  description: "描述"
+  tester: "作者"
+oldtest:
+  host: 192.168.200.26
+  user: dbuser
+  password: dbpasswd
+  db: babysitter
+newtest:
+  host: 192.168.200.13
+  user: dbuser
+  password: dbpasswd
+  db: babysitter
+api:
+  test_a_url: 'http://chuanbo.tst-weiboyi.com'
+  test_a_username: "luckyxi"
+  test_a_pawd: "wbyxixi123"
+  test_b_url: 'http://toufang.tst-weiboyi.com:8080/'
+  test_b_username: "hanyi"
+  test_b_pawd: "123456"
+creat_active:
+  activity_name: "A端自动化"
+  company_id: 313022
+  contact_cell_phone: 17801016976
+
