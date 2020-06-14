@@ -13,6 +13,8 @@ CASES_DIR = os.path.join(BASE_DIR, 'Cases')
 CONFIGS_DIR = os.path.join(BASE_DIR, 'configs')
 # 获取配置文件路径
 YAML_DIR = os.path.join(CONFIGS_DIR, 'testcase.yaml')
+# 获取账号配置文件路径
+ACCOUNT_YAML_DIR = os.path.join(CONFIGS_DIR, 'account.yaml')
 # 获取日志文件路径
 LOGS_DIR = os.path.join(BASE_DIR, 'logs')
 # 获取报告文件路径

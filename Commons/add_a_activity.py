@@ -8,7 +8,7 @@ import json
 from Commons.handle_requestes import HandleRequests
 
 # 创建url
-login_a_url = "http://chuanbo.tst-weiboyi.com/"
+login_a_url = "http://chuanbo.fat-weiboyi.com/"
 # 设置登录请求参数
 login_a_data = {
     "web_csrf_token": "undefined",
@@ -16,7 +16,7 @@ login_a_data = {
     "typelogin": "1/",
     "piccode": "1234",
     "username": "luckyxi",
-    "password": "wbyxixi123",
+    "password": "wby123456",
 }
 # 创建实例化
 do_request = HandleRequests()
@@ -30,8 +30,10 @@ token = re.findall(pattern, actual)
 token = token[0]
 old_token={"web_csrf_token":token}
 #创建活动url
-add_url='http://chuanbo.tst-weiboyi.com/hwreservation/index/add'
-add_data='{"weibo_type": 1,"name":"A端自动化2020-05-16 22_05_41","customer_budget": 99999999.99,"start_time":"2020-05-19 22:05","end_time":"2020-05-23 22:05","media_feedback_time_expected":"2020-05-21 22:05","industry_category_code":"D02","contact_cell_phone":"17801016976","company_id":313022,"notice_product_result":2}'
+add_url='http://chuanbo.fat-weiboyi.com/hwreservation/index/add'
+add_data='{"weibo_type": 1,"name":"A端自动化2020-05-16 22_05_41","customer_budget": 99999999.99,"start_time":"2020-06-20 15:45",\
+"end_time":"2020-06-22 15:45","media_feedback_time_expected":"2020-06-18 15:45","industry_category_code":"D01",\
+"contact_cell_phone":"17801016976","company_id":313022,"notice_product_result":2,"uploadgoodsqualityinput":"/img/proof/159212129032322868465ee5d7caef77e.jpg"}'
 add_data=json.loads(add_data)
 add_data.update(old_token)
 add = do_request.send(add_url, data=add_data, is_json=False)

@@ -22,6 +22,7 @@ class TestLogin(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.do_handle = HandleRequests()
 
+
     @classmethod
     def tearDownClass(cls) -> None:
         cls.do_handle.close()
@@ -29,7 +30,7 @@ class TestLogin(unittest.TestCase):
     @data(*cases)
     def test_login_data(self, case):
         # 获取url
-        url = do_yaml.read_yaml('api','test_a_url')
+        url = case.url
         # 获取请求参数
         data = case.data
         # 发起登录请求
@@ -40,10 +41,10 @@ class TestLogin(unittest.TestCase):
                                   )
         # 实际结果转化为字典
         actual = res.json()
-        #再讲字典转化为不乱码json格式，写入到excel中
+        # 再讲字典转化为不乱码json格式，写入到excel中
         result = json.dumps(actual, ensure_ascii=False)
         # 获取期望结果
-        expted = eval(case.expected)
+        expted = json.loads(case.expected)
         # 获取行数
         row = case.case_id + 1
         # 获取标题

@@ -23,12 +23,15 @@ class Atoken:
         }
         # 创建请求实例化
         self.do_request = HandleRequests()
-        res = self.do_request.send(self.login_a_url, data=self.login_a_data, is_json=False)
-        # 关闭实例化
-        self.do_request.close()
+        # 发送登录请求
+        self.do_request.send(self.login_a_url, data=self.login_a_data, is_json=False)
+
 
     def get_token(self):
+        # 使用同一个会话发送get请求，可以保持登录状态
         get_res = self.do_request.send(self.login_a_url, method='get')
+        # 关闭实例化
+        self.do_request.close()
         actual = get_res.content.decode('utf8')
         # 取中间，findall取到的是 list
         pattern = 'value="(.+?)" id'

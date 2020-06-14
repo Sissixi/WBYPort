@@ -5,12 +5,19 @@ Time:2020/5/13 0013下午 10:49
 """
 import re
 import time, datetime
+from Commons.handle_yaml import HandleYaml
 from Commons.handle_yaml import do_yaml
+from Commons.handle_path import ACCOUNT_YAML_DIR
 from Commons.Alogin import Atoken
+
+'''
+创建A端预约活动的微博平台-参数化类
+'''
+
 
 class Create_active_Parameterization:
     '''
-    创建活动的参数化类
+        创建A端预约活动的需求参数化
     '''
     # 活动名字
     name = r'{name}'
@@ -23,9 +30,20 @@ class Create_active_Parameterization:
     # 手机号码
     tel = r'{tel}'
     # 公司id
-    company_id=r'{companyid}'
+    company_id = r'{companyid}'
     # 登录token
     token = '{token}'
+    '''
+    A端预约活动-账号搜索参数化
+    '''
+    # 微博账号名称
+    weibo_name = r"{account_name}"
+    # 微博账号id
+    accountid = r"{account_id}"
+    # 需求id
+    res_id = r"{requirement_id}"
+    # 创建yaml对象
+    do_account_yaml = HandleYaml(ACCOUNT_YAML_DIR)
 
     @classmethod
     def to_parm(cls, data):
@@ -57,10 +75,27 @@ class Create_active_Parameterization:
             '''替换token'''
             token = Atoken().get_token()
             data = re.sub(cls.token, token, data)
+        if cls.weibo_name in data:
+            '''参数化替换账户名称'''
+            weibo_name = cls.do_account_yaml.read_yaml("account", "weiboname")
+            data = re.sub(cls.weibo_name, weibo_name, data)
+        if cls.accountid in data:
+            '''参数化替换账号id'''
+            weibo_id = str(cls.do_account_yaml.read_yaml("account", "weibo_account_id"))
+            data = re.sub(cls.accountid, weibo_id, data)
+        if cls.res_id in data:
+            '''参数化替换需求id'''
+            requirement_id = str(getattr(cls, "business_id"))
+            data = re.sub(cls.res_id, requirement_id, data)
         return data
 
-if __name__ == '__main__':
-    data='{"weibo_type": 1,"name":"{name}","customer_budget": 99999999.99,"start_time":"{start_time}","end_time":"{end_time}","media_feedback_time_expected":"{media_feedback_time}","industry_category_code":"D02","contact_cell_phone":"{tel}","company_id":{companyid},"web_csrf_token":"{token}","notice_product_result":2}'
-    a=Create_active_Parameterization.to_parm(data)
-    print(a)
 
+if __name__ == '__main__':
+    data = '{"web_csrf_token":"{token}","account_ids":"{account_id}","business_id":"{requirement_id}"}'
+    # data = '{"weibo_type": 1,"name":"{name}","customer_budget": 99999999.99,\
+    # "start_time":"{start_time}","end_time":"{end_time}",\
+    # "media_feedback_time_expected":"{media_feedback_time}","industry_category_code":"D01",\
+    # "contact_cell_phone":"{tel}","company_id":{companyid},"notice_product_result":2,\
+    # "uploadgoodsqualityinput":"/img/proof/159212129032322868465ee5d7caef77e.jpg","web_csrf_token":"{token}"}'
+    a = Create_active_Parameterization.to_parm(data)
+    print(a)

@@ -11,26 +11,30 @@ from Commons.handle_requestes import HandleRequests
 from Commons.handle_logs import do_log
 from Commons.Parameter.handle_create_active_parameter import Create_active_Parameterization
 
+
 @ddt
-class TestAdd(unittest.TestCase):
+class TestCreat(unittest.TestCase):
     # 读出excel数据
-    do_excel = HandleExcel('add1')
+    do_excel = HandleExcel('a_create_requirement')
     cases = do_excel.read_excel()
 
     @classmethod
     def setUpClass(cls) -> None:
         cls.do_handle = HandleRequests()
+        # 添加请求头
+        # cls.do_handle.add_headers(do_yaml.read_yaml('api', 'test_a_login_header'))
+
     @classmethod
     def tearDownClass(cls) -> None:
         cls.do_handle.close()
 
     @data(*cases)
-    def test_login_data(self, case):
+    def test_creat_data(self, case):
         # 获取url
         new_url = do_yaml.read_yaml('api', 'test_a_url') + case.url
         # 获取请求参数
         new_data = Create_active_Parameterization.to_parm(case.data)
-        # 发起登录请求
+        # 发起请求
         res = self.do_handle.send(url=new_url,
                                   method=case.method,
                                   data=new_data,
@@ -45,7 +49,7 @@ class TestAdd(unittest.TestCase):
         # 获取标题
         msg = case.title
         try:
-            self.assertEqual(expted.get("message"), actual.get("message"), msg=msg)
+            self.assertEqual(expted.get("code"), actual.get("code"), msg=msg)
         except AssertionError as e:
             self.do_excel.write_excel(row=row,
                                       column=do_yaml.read_yaml('excel', 'result_col'),

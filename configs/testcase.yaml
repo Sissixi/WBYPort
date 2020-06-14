@@ -26,15 +26,15 @@ newtest:
   user: dbuser
   password: dbpasswd
   db: babysitter
-api:
-  test_a_url: 'http://chuanbo.tst-weiboyi.com'
-  test_a_username: "luckyxi"
-  test_a_pawd: "wbyxixi123"
-  test_b_url: 'http://toufang.tst-weiboyi.com:8080/'
-  test_b_username: "hanyi"
-  test_b_pawd: "123456"
 creat_active:
   activity_name: "A端自动化"
   company_id: 313022
   contact_cell_phone: 17801016976
-
+api:
+  test_a_url: 'http://chuanbo.fat-weiboyi.com/'
+  test_a_username: luckyxi
+  test_a_pawd: wby123456
+  test_a_login_header: '{"Content-Type":"application/x-www-form-urlencoded","charset":"UTF-8"}'
+  test_b_url: 'http://toufang.fat-weiboyi.com:8080/'
+  test_b_username: "hanyi"
+  test_b_pawd: "123456"
