@@ -10,32 +10,32 @@ from Commons.handle_yaml import do_yaml
 from Commons.handle_requestes import HandleRequests
 from Commons.handle_logs import do_log
 from Commons.Parameter.handle_create_active_parameter import Create_active_Parameterization
-
+from Commons.Alogin import Atoken
 @ddt
 class Test_A_search_account(unittest.TestCase):
     #读取出来excel数据
-    do_excel=HandleExcel('a_seach_account')
+    do_excel=HandleExcel('a_add_account')
     cases=do_excel.read_excel()
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.do_handle=HandleRequests()
-    @classmethod
-    def tearDownClass(cls) -> None:
-        cls.do_handle.close()
+    # @classmethod
+    # def setUpClass(cls) -> None:
+    #     cls.do_handle=HandleRequests()
+    # @classmethod
+    # def tearDownClass(cls) -> None:
+    #     cls.do_handle.close()
     @data(*cases)
     def test_seach_account(self,case):
         # 获取url
-        if case.case_id==2:
-            res_id=Create_active_Parameterization.to_parm(Create_active_Parameterization.res_id)
-            new_url = do_yaml.read_yaml('api', 'test_a_url') + case.url+res_id
-        else:
-            new_url = do_yaml.read_yaml('api', 'test_a_url') + case.url
-
+        # if case.case_id==2:
+        #     res_id=Create_active_Parameterization.to_parm(Create_active_Parameterization.res_id)
+        #     new_url = do_yaml.read_yaml('api', 'test_a_url') + case.url+res_id
+        # else:
+        #     new_url = do_yaml.read_yaml('api', 'test_a_url') + case.url
+        new_url = do_yaml.read_yaml('api', 'test_a_url') + case.url
         # 获取请求参数
         new_data = Create_active_Parameterization.to_parm(case.data)
 
         # 发起请求
-        res = self.do_handle.send(url=new_url,
+        res = Atoken.do_request.send(url=new_url,
                                   method=case.method,
                                   data=new_data,
                                   is_json=False

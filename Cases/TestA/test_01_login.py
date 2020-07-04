@@ -41,7 +41,7 @@ class TestLogin(unittest.TestCase):
                                   )
         # 实际结果转化为字典
         actual = res.json()
-        # 再讲字典转化为不乱码json格式，写入到excel中
+        # 再将字典转化为不乱码json格式，写入到excel中
         result = json.dumps(actual, ensure_ascii=False)
         # 获取期望结果
         expted = json.loads(case.expected)

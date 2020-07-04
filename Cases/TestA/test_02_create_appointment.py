@@ -10,7 +10,7 @@ from Commons.handle_yaml import do_yaml
 from Commons.handle_requestes import HandleRequests
 from Commons.handle_logs import do_log
 from Commons.Parameter.handle_create_active_parameter import Create_active_Parameterization
-
+from Commons.Alogin import Atoken
 
 @ddt
 class TestCreat(unittest.TestCase):
@@ -18,15 +18,15 @@ class TestCreat(unittest.TestCase):
     do_excel = HandleExcel('a_create_requirement')
     cases = do_excel.read_excel()
 
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.do_handle = HandleRequests()
-        # 添加请求头
-        # cls.do_handle.add_headers(do_yaml.read_yaml('api', 'test_a_login_header'))
-
-    @classmethod
-    def tearDownClass(cls) -> None:
-        cls.do_handle.close()
+    # @classmethod
+    # def setUpClass(cls) -> None:
+    #     cls.do_handle = HandleRequests()
+    #     # 添加请求头
+    #     # cls.do_handle.add_headers(do_yaml.read_yaml('api', 'test_a_login_header'))
+    #
+    # @classmethod
+    # def tearDownClass(cls) -> None:
+    #     cls.do_handle.close()
 
     @data(*cases)
     def test_creat_data(self, case):
@@ -34,11 +34,12 @@ class TestCreat(unittest.TestCase):
         new_url = do_yaml.read_yaml('api', 'test_a_url') + case.url
         # 获取请求参数
         new_data = Create_active_Parameterization.to_parm(case.data)
+
         # 发起请求
-        res = self.do_handle.send(url=new_url,
+        res = Atoken.do_request.send(url=new_url,
                                   method=case.method,
                                   data=new_data,
-                                  is_json=False
+                                  is_json=False,
                                   )
         # 实际结果转化为字典
         actual = res.json()

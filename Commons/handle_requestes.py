@@ -9,12 +9,10 @@ from Commons.handle_logs import do_log
 
 
 class HandleRequests:
-    #自动传递cookies信息
-    one_session = requests.Session()
 
-    # def __init__(self):
-    #     # 创建一个会话对象，这个会话对象自动传递cookies信息
-    #     self.one_session = requests.Session()
+    def __init__(self):
+        # 创建一个会话对象，这个会话对象自动传递cookies信息
+        self.one_session = requests.Session()
 
     def add_headers(self, headers):
         # 添加公共请求头
@@ -55,12 +53,18 @@ class HandleRequests:
         # 关闭会话，释放资源；还可以发起请求
         self.one_session.close()
 # class HandleRequests:
+#     def session(self):
+#         """
+#         会话
+#         :return:
+#         """
+#         return requests.Session()
 #
 #     def add_headers(self, headers):
 #         # 添加公共请求头
 #         requests.Session().headers.update(headers)
 #
-#     def send(self, url, method='post', data=None, is_json=True, **kwargs):
+#     def send(self, url, method='post', data=None, is_json=True,session=None, **kwargs):
 #         # 先判断data是否为字符串格式
 #         if isinstance(data, str):
 #             try:
@@ -90,7 +94,24 @@ class HandleRequests:
 #             do_log.error(f"不支持的请求方法{method}")
 #         # 返回Response响应报文对象
 #         return res
-#
 #     def close(self):
 #         # 关闭会话，释放资源；还可以发起请求
 #         requests.Session().close()
+# class HandleRequest:
+#     """
+#     处理请求
+#     """
+#     def __init__(self):
+#         self.one_session = requests.Session()
+#
+#     def send(self, method, url, **kwargs):
+#         method = method.lower()
+#         if method in ("get", "post", "put", "delete", "patch"):
+#             res = self.one_session.request(method, url, **kwargs)
+#         else:
+#             res = None
+#             print("不支持【{}】其他方法的请求".format(method))
+#         return res
+#
+#     def close(self):
+#         self.one_session.close()

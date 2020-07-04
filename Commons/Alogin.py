@@ -9,6 +9,8 @@ from Commons.handle_yaml import do_yaml
 
 
 class Atoken:
+    # 创建请求实例化
+    do_request = HandleRequests()
     def __init__(self):
         # 创建url
         self.login_a_url = do_yaml.read_yaml('api', 'test_a_url')
@@ -21,11 +23,11 @@ class Atoken:
             "username": do_yaml.read_yaml('api', 'test_a_username'),
             "password": do_yaml.read_yaml('api', 'test_a_pawd'),
         }
-        # 创建请求实例化
-        self.do_request = HandleRequests()
-        # 发送登录请求
-        self.do_request.send(self.login_a_url, data=self.login_a_data, is_json=False)
 
+        # 发送登录请求
+        r = self.do_request.send(self.login_a_url, data=self.login_a_data, is_json=False)
+        self.session=r.cookies
+        print('01:',self.session)
 
     def get_token(self):
         # 使用同一个会话发送get请求，可以保持登录状态
@@ -35,10 +37,11 @@ class Atoken:
         actual = get_res.content.decode('utf8')
         # 取中间，findall取到的是 list
         pattern = 'value="(.+?)" id'
-        ## 所以我们一般[0]，取第一个即可。
+        # 所以我们一般[0]，取第一个即可。
         token = re.findall(pattern, actual)
         token = token[0]
         return token
-
+token=Atoken().get_token()
 if __name__ == '__main__':
+    print(Atoken().get_token())
     print(Atoken().get_token())

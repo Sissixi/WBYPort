@@ -8,7 +8,7 @@ import time, datetime
 from Commons.handle_yaml import HandleYaml
 from Commons.handle_yaml import do_yaml
 from Commons.handle_path import ACCOUNT_YAML_DIR
-from Commons.Alogin import Atoken
+from Commons.Alogin import Atoken,token
 
 '''
 创建A端预约活动的微博平台-参数化类
@@ -33,6 +33,7 @@ class Create_active_Parameterization:
     company_id = r'{companyid}'
     # 登录token
     token = '{token}'
+    # token=token
     '''
     A端预约活动-账号搜索参数化
     '''
@@ -73,7 +74,7 @@ class Create_active_Parameterization:
             data = re.sub(cls.company_id, str(company_id), data)
         if cls.token in data:
             '''替换token'''
-            token = Atoken().get_token()
+            token = token
             data = re.sub(cls.token, token, data)
         if cls.weibo_name in data:
             '''参数化替换账户名称'''
@@ -91,11 +92,10 @@ class Create_active_Parameterization:
 
 
 if __name__ == '__main__':
-    data = '{"web_csrf_token":"{token}","account_ids":"{account_id}","business_id":"{requirement_id}"}'
-    # data = '{"weibo_type": 1,"name":"{name}","customer_budget": 99999999.99,\
-    # "start_time":"{start_time}","end_time":"{end_time}",\
-    # "media_feedback_time_expected":"{media_feedback_time}","industry_category_code":"D01",\
-    # "contact_cell_phone":"{tel}","company_id":{companyid},"notice_product_result":2,\
-    # "uploadgoodsqualityinput":"/img/proof/159212129032322868465ee5d7caef77e.jpg","web_csrf_token":"{token}"}'
-    a = Create_active_Parameterization.to_parm(data)
+    data1 = '{"weibo_type": 1,"name":"{name}","customer_budget": 99999999.99,"start_time":"{start_time}","end_time":"{end_time}","media_feedback_time_expected":"{media_feedback_time}","industry_category_code":"D01","contact_cell_phone":"{tel}","company_id":{companyid},"notice_product_result":2,"uploadgoodsqualityinput":"/img/proof/159212129032322868465ee5d7caef77e.jpg","web_csrf_token":token}'
+    data2 = '{"web_csrf_token":"{token}","account_ids":"{account_id}"}'
+
+    a = Create_active_Parameterization.to_parm(data1)
+    b = Create_active_Parameterization.to_parm(data2)
     print(a)
+    print(b)
